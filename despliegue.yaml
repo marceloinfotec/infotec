@@ -1,1 +1,21 @@
-https://github.com/marceloinfotec/infotec/blob/master/despliegue.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: despliegue-deploy
+  labels:
+    app: despliegue
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: despliegue
+  template:
+    metadata:
+      labels:
+        app: despliegue
+    spec:
+      containers:
+      - name: despliegue
+        image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
+        ports:
+        - containerPort: 80
