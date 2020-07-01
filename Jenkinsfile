@@ -65,9 +65,6 @@ pipeline {
                         configs: 'despliegue.yml',
                         enableConfigSubstitution: true
                     )
-                }
-            }
-         }
       }
    }  
 }    
