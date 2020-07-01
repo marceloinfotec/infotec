@@ -32,7 +32,7 @@ pipeline {
                 }
             }
         }
-                   stage('DeployToProduction') {
+        stage('Deploy To Production') {
             when {
                 branch 'master'
             }
@@ -53,5 +53,21 @@ pipeline {
                 }
             }
         }
-    }  
+         stage('Deploy To K8S') {
+            when {
+                branch 'master'
+            }
+            steps {
+                input 'Deploy to Kubernetes?'
+                milestone(1)
+                 kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'train-schedule-kube.yml',
+                    enableConfigSubstitution: true
+                )
+            }
+         }
+          
+    
+    }
 }    
