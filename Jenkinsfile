@@ -41,14 +41,14 @@ pipeline {
                 milestone(1)
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
-                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull gilardoni72/despliegue:${env.BUILD_NUMBER}\""
+                        sh "docker pull gilardoni72/despliegue:${env.BUILD_NUMBER}\"
                         try {
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop despliegue\""
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker rm despliegue\""
+                            sh "docker stop despliegue\"
+                            sh "docker rm despliegue\"
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
-                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker run --restart always --name despliegue -p 80:80 -d gilardoni72/despliegue:${env.BUILD_NUMBER}\""
+                        sh "docker run --restart always --name despliegue -p 80:80 -d gilardoni72/despliegue:${env.BUILD_NUMBER}\"
                     }
                 }
             }
