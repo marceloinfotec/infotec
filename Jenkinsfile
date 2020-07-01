@@ -53,18 +53,5 @@ pipeline {
                 }
             }
         }
-        stage('DeployToProduction') {
-                when {
-                    branch 'master'
-                }
-                steps {
-                    input 'Deploy to Production?'
-                    milestone(1)
-                    kubernetesDeploy(
-                        kubeconfigId: 'kubeconfig',
-                        configs: 'despliegue.yml',
-                        enableConfigSubstitution: true
-                    )
-      }
-   }  
+    }  
 }    
