@@ -60,7 +60,7 @@ pipeline {
             steps {
                 input 'Deploy to Kubernetes?'
                 milestone(1)
-                withCredentials([usernamePassword(credentialsId: 'kube_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
                         sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$kube_ip \"kubectl apply -f desoliegue.yml\""
                         try {
