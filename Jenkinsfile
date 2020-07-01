@@ -32,7 +32,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy To Production') {
+        stage('Deploy To QA') {
             when {
                 branch 'master'
             }
@@ -53,21 +53,26 @@ pipeline {
                 }
             }
         }
-         stage('Deploy To K8S') {
+       stage('Deploy To kubernetes') {
             when {
                 branch 'master'
             }
             steps {
                 input 'Deploy to Kubernetes?'
                 milestone(1)
-                 kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'despliegue.yml',
-                    enableConfigSubstitution: true
-                )
+                withCredentials([usernamePassword(credentialsId: 'kube_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                    script {
+                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$kube_ip \"kubectl apply -f desoliegue.yml\""
+                        try {
+                          //  sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop despliegue\""
+                          //  sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker rm despliegue\""
+                        } catch (err) {
+                            echo: 'caught error: $err'
+                        }
+                       // sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker run --restart always --name despliegue -p 8081:80 -d gilardoni72/despliegue:${env.BUILD_NUMBER}\""
+                    }
+                }
             }
-         }
-          
-    
+        }
     }
 }    
