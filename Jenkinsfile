@@ -1,12 +1,12 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Construir') {
             steps {
                 echo 'Running build automation'
                 }
         }
-        stage('Build Docker Image') {
+        stage('Contruir Imagen Docker') {
             when {
                 branch 'master'
             }
@@ -19,7 +19,7 @@ pipeline {
                 }
             }
         }
-        stage('Push Docker Image') {
+        stage('Push Imgagen Docker') {
             when {
                 branch 'master'
             }
@@ -32,13 +32,13 @@ pipeline {
                 }
             }
         }
-        stage('Deploy To QA') {
+        stage('Deploy a Desarollo') {
             when {
                 branch 'master'
           
             }
             steps {
-                input 'Deploy to Test ?'
+                input 'Deploy a Desarrollo?'
                 milestone(1)
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
@@ -54,12 +54,12 @@ pipeline {
                 }
             }
         }
-       stage('Deploy To kubernetes') {
+       stage('Deploy A Produccion') {
             when {
                 branch 'master'
             }
             steps {
-                input 'Deploy to Kubernetes?'
+                input 'Deploy A Produccion?'
                 milestone(2)
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
