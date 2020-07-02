@@ -1,17 +1,3 @@
-podTemplate(yaml: '''
-kind: Service
-apiVersion: v1
-metadata:
-  name: despliegue
-spec:
-  type: NodePort
-  selector:
-    app: despliegue
-  ports:
-  - protocol: TCP
-    port: 80
-    nodePort: 30002
-''')
 pipeline {
     agent any
     stages {
@@ -49,6 +35,25 @@ pipeline {
         stage('Deploy To QA') {
             when {
                 branch 'master'
+           
+              podTemplate(yaml: '''
+            kind: Service
+            apiVersion: v1
+            metadata:
+              name: despliegue
+            spec:
+              type: NodePort
+              selector:
+                app: despliegue
+              ports:
+              - protocol: TCP
+                port: 80
+                nodePort: 30002
+              ''')
+                    
+            
+            
+            
             }
             steps {
                 //input 'Deploy to Production?'
