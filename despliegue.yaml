@@ -1,21 +1,13 @@
-apiVersion: apps/v1
-kind: Deployment
+
+kind: Service
+apiVersion: v1
 metadata:
-  name: despliegue-deploy
-  labels:
-    app: despliegue
+  name: despliegue
 spec:
-  replicas: 2
+  type: NodePort
   selector:
-    matchLabels:
-      app: despliegue
-  template:
-    metadata:
-      labels:
-        app: despliegue
-    spec:
-      containers:
-      - name: despliegue
-        image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
-        ports:
-        - containerPort: 80
+    app: despliegue
+  ports:
+  - protocol: TCP
+    port: 80
+    nodePort: 30002
