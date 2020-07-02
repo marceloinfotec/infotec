@@ -42,7 +42,7 @@ pipeline {
                 //milestone(1)
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
-                             sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$kube_ip \"kubectl run despliegue --image=gilardoni72/despliegue:${env.BUILD_NUMBER} --port=80 --labels="app=despliegue" \""
+          sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$kube_ip \"kubectl run despliegue --image=gilardoni72/despliegue:${env.BUILD_NUMBER} --port=80 --labels='app=despliegue' \""
                         //sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull gilardoni72/despliegue:${env.BUILD_NUMBER}\""
                         try {
                           //  sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop despliegue\""
