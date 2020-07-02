@@ -1,3 +1,17 @@
+podTemplate(yaml: '''
+kind: Service
+apiVersion: v1
+metadata:
+  name: despliegue
+spec:
+  type: NodePort
+  selector:
+    app: despliegue
+  ports:
+  - protocol: TCP
+    port: 80
+    nodePort: 30002
+''')
 pipeline {
     agent any
     stages {
@@ -41,8 +55,7 @@ pipeline {
                 //milestone(1)
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
-                        sh "chmod +x despliegue.yaml"
-                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$kube_ip \"kubectl apply -f despliegue.yaml \""
+                             sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$kube_ip \"kubectl apply -f podTemplate.yaml \""
                         //sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull gilardoni72/despliegue:${env.BUILD_NUMBER}\""
                         try {
                           //  sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop despliegue\""
