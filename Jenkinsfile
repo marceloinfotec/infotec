@@ -80,7 +80,7 @@ pipeline {
             }
         }
         stage('Deploy Load Balancer')
-        stage {
+          steps {
             script{
                 kubernetesDeploy(config:"despliegue.yml",kubeconfogId: "kubeconfig") 
             } 
