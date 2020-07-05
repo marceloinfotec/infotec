@@ -79,12 +79,5 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Load Balancer')
-          steps {
-            script{
-                kubernetesDeploy(config:"despliegue.yml",kubeconfogId: "kubeconfig") 
-            } 
-        } 
-     
-    }
+     }
 }    
