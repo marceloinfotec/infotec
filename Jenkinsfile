@@ -32,7 +32,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy a Desarollo') {
+        stage('Deploy a Control de Calidad') {
             when {
                 branch 'master'
           
