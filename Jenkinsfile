@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Contruir Imagen Docker') {
             when {
-                branch 'master'
+                branch 'desarrollo'
             }
             steps {
                 script {
@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Push Imgagen Docker') {
             when {
-                branch 'master'
+                branch 'desarrollo'
             }
             steps {
                 script {
@@ -34,7 +34,7 @@ pipeline {
         }
         stage('Deploy a Desarollo') {
             when {
-                branch 'master'
+                branch 'desarrollo'
           
             }
             steps {
