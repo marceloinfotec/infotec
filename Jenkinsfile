@@ -38,7 +38,7 @@ pipeline {
           
             }
             steps {
-                input 'Deploy a Desarrollo?'
+                input 'Deploy a Desarrollo ip 172.18.121.128?'
                 milestone(1)
                 withCredentials([usernamePassword(credentialsId: 'dev_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
@@ -54,7 +54,7 @@ pipeline {
                 }
             }
         }
-       stage('Deploy A Produccion') {
+       stage('Deploy A Produccion NO PERMITIDO') {
             when {
                 branch 'master'
             }
