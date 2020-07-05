@@ -38,7 +38,7 @@ pipeline {
           
             }
             steps {
-                input 'Deploy a Desarrollo?'
+                input 'Deploy a Control de Calidad ?'
                 milestone(1)
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
